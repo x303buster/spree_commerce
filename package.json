@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ci": "playwright test --reporter=github,line",
+    "test:report": "playwright show-report",
+    "test:install": "playwright install --with-deps"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/x303buster/spree_commerce.git"
