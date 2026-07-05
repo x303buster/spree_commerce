@@ -10,11 +10,13 @@ export class CartPage extends PlaywrightFunctions {
     }
 
     async verifyProductInCart(productName: string, price: string) {
-        await expect(this.page.getByText(productName, { exact: false })).toBeVisible();
-        await expect(this.page.getByText(price, { exact: false })).toBeVisible();
+        await this.waitForNetworkIdle(this.page);
+        await expect(this.page.getByText(productName, { exact: true }).nth(0)).toBeVisible();
+        await expect(this.page.getByText(price, { exact: true }).nth(0)).toBeVisible();
     }
 
     async verifyCartSummary(subtotal: string, total: string) {
+        await this.waitForNetworkIdle(this.page);
         await expect(this.page.locator(`text=${subtotal}`)).toBeVisible();
         await expect(this.page.locator(`text=${total}`)).toBeVisible();
     }

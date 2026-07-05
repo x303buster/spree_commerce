@@ -79,6 +79,6 @@ export class CheckoutPage extends PlaywrightFunctions {
     }
 
     async verifyOrderConfirmation() {
-        await expect(this.page.getByText(/order number|thank you|success/i)).toBeVisible();
+        await expect(this.page.getByText(/thanks for your order/i)).toBeVisible();
     }
 }

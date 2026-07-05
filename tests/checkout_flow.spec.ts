@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 import { URL } from '#constants/url';
 import { PageObjectModel } from '#src/pages/page_object_model';
 
@@ -30,14 +31,14 @@ test.describe('Spree Commerce checkout flow', () => {
 
     await pom.checkoutPage.fillContactInformation(purchaseEmail);
     await pom.checkoutPage.fillShippingAddress({
-      firstName: 'Test',
-      lastName: 'User',
-      address1: '123 Main Street',
-      address2: 'Suite 100',
-      city: 'Boston',
-      state: 'Massachusetts',
-      postalCode: '02118',
-      phone: '5551234567',
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      address1: faker.location.streetAddress(),
+      address2: faker.location.secondaryAddress(),
+      city: faker.location.city(),
+      state: faker.location.state(),
+      postalCode: faker.location.zipCode(),
+      phone: faker.phone.number(),
       country: 'United States',
     });
     await pom.checkoutPage.selectPaymentMethod();

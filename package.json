@@ -30,5 +30,8 @@
   "imports": {
     "#src/*": "./src/*",
     "#constants/*": "./src/constants/*"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.5.0"
   }
 }

@@ -3,20 +3,23 @@ import { PlaywrightFunctions } from "#src/utilities/playwright_functions.js";
 
 export class ProductDetailPage extends PlaywrightFunctions {
     private readonly btnAddToCart: Locator;
+    private readonly btnAdding: Locator;
     private readonly productTitle: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.btnAddToCart = page.getByRole("button", { name: /add to cart/i });
+        this.btnAddToCart = page.getByRole("button", { name: /Add to cart/i });
+        this.btnAdding = page.getByRole("button", { name: /Adding.../i });
         this.productTitle = page.locator("h1, h2, h3").first();
     }
 
-    async addToCart() {
-        await this.btnAddToCart.click();
-        await this.waitForNetworkIdle(this.page);
+    async addToCart() : Promise<void> {
+        await this.waitForPageToLoad(this.page);
+        await this.clickThenWait(this.btnAddToCart);
+        await this.isLocatorHidden(this.btnAdding);
     }
 
-    async verifyProductTitle(expectedTitle: string) {
+    async verifyProductTitle(expectedTitle: string) : Promise<void> {
         await expect(this.productTitle).toContainText(expectedTitle);
     }
 }
