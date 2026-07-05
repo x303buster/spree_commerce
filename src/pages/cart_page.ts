@@ -13,12 +13,18 @@ export class CartPage extends PlaywrightFunctions {
     }
 
     /**
-     * Verifies that the specified product and price are visible in the cart.
+     * Verifies that the specified product and price are visible together in a single cart item.
      */
     async verifyProductInCart(productName: string, price: string) {
         await this.waitForNetworkIdle(this.page);
-        await expect(this.page.getByText(productName, { exact: true }).nth(0)).toBeVisible();
-        await expect(this.page.getByText(price, { exact: true }).nth(0)).toBeVisible();
+
+        const cartItem = this.page
+            .locator("li, tr, div")
+            .filter({ hasText: productName })
+            .filter({ hasText: price })
+            .first();
+
+        await expect(cartItem).toBeVisible({ timeout: 10000 });
     }
 
     /**

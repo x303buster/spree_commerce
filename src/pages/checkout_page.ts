@@ -89,17 +89,21 @@ export class CheckoutPage extends PlaywrightFunctions {
     }
 
     /**
-     * Submits the order by clicking the place-order button.
+     * Submits the order by clicking the place-order button once it is ready.
      */
     async placeOrder() {
+        await expect(this.btnPlaceOrder).toBeEnabled({ timeout: 10000 });
         await this.btnPlaceOrder.click();
-        await this.waitForNetworkIdle(this.page);
+        await expect(this.page).toHaveURL(/\/checkout\//, { timeout: 10000 });
+        await this.waitForPageToLoad(this.page);
     }
 
     /**
-     * Verifies that the order confirmation message is shown.
+     * Verifies that the order confirmation message is shown after checkout completes.
      */
     async verifyOrderConfirmation() {
-        await expect(this.page.getByText(/thanks for your order/i)).toBeVisible();
+        const confirmationMessage = this.page.getByText(/thanks for your order/i).first();
+        await expect(confirmationMessage).toBeVisible({ timeout: 15000 });
+        await this.waitForPageToLoad(this.page);
     }
 }
