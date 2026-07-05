@@ -17,6 +17,9 @@ export class PageObjectModel {
     public readonly cartPage: CartPage;
     public readonly checkoutPage: CheckoutPage;
 
+    /**
+     * Initializes all page-object instances for the test framework.
+     */
     constructor(page: Page) {
         this.page = page;
         this.mainPage = new MainPage(page);

@@ -8,6 +8,9 @@ export class MainPage extends PlaywrightFunctions {
     private readonly aShopAllLink: Locator;
     private readonly aCartLink: Locator;
 
+    /**
+     * Initializes the main page object and locates the main navigation links.
+     */
     constructor(page: Page) {
         super(page);
         this.aAccountLink = page.getByRole("link", { name: "Account", exact: true });
@@ -25,12 +28,18 @@ export class MainPage extends PlaywrightFunctions {
         await expect(this.page).toHaveURL(/.*account/);
     }
 
+    /**
+     * Opens the Shop All products page from the main navigation.
+     */
     async goToShopAll() {
         await this.page.waitForLoadState("networkidle");
         await this.aShopAllLink.click();
         await expect(this.page).toHaveURL(/\/products/);
     }
 
+    /**
+     * Opens the cart page from the main navigation.
+     */
     async goToCart() {
         await this.page.waitForLoadState("networkidle");
         await this.aCartLink.click();

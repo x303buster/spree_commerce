@@ -10,6 +10,9 @@ export class CreateAccountPage extends PlaywrightFunctions {
     private readonly chkAgreeToTerms: Locator;
     private readonly btnCreateAccount: Locator;
 
+    /**
+     * Initializes the create-account page object and locates the form fields.
+     */
     constructor(page: Page) {
         super(page);
 

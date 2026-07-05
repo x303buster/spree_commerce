@@ -9,6 +9,9 @@ export class SignInPage extends PlaywrightFunctions {
     private readonly btnSignIn: Locator;
     private readonly aSignUpLink: Locator;
 
+    /**
+     * Initializes the sign-in page object and locates the sign-in form controls.
+     */
     constructor(page: Page) {
         super(page);
         this.txtEmail = page.getByPlaceholder("you@example.com");

@@ -30,6 +30,9 @@ export class CheckoutPage extends PlaywrightFunctions {
     private readonly chkAgreeToTerms: Locator;
     private readonly btnPlaceOrder: Locator;
 
+    /**
+     * Initializes the checkout page object and locates the input fields and actions.
+     */
     constructor(page: Page) {
         super(page);
         this.txtEmail = page.locator("#email");
@@ -48,10 +51,16 @@ export class CheckoutPage extends PlaywrightFunctions {
         this.btnPlaceOrder = page.getByRole("button", { name: /Place Order/i });
     }
 
+    /**
+     * Fills the customer's email address in the contact information section.
+     */
     async fillContactInformation(email: string) {
         await this.txtEmail.fill(email);
     }
 
+    /**
+     * Fills the shipping address form using the provided address details.
+     */
     async fillShippingAddress(address: ShippingAddress) {
         await this.selectCountry.selectOption({ label: address.country ?? "United States" });
         await this.txtFirstName.fill(address.firstName);
@@ -65,19 +74,31 @@ export class CheckoutPage extends PlaywrightFunctions {
         if (address.phone) await this.txtPhone.fill(address.phone);
     }
 
+    /**
+     * Selects the payment method that uses the on-terms option.
+     */
     async selectPaymentMethod() {
         await this.paymentMethodOnTerms.check();
     }
 
+    /**
+     * Accepts the terms and conditions checkbox.
+     */
     async agreeToTerms() {
         await this.chkAgreeToTerms.check();
     }
 
+    /**
+     * Submits the order by clicking the place-order button.
+     */
     async placeOrder() {
         await this.btnPlaceOrder.click();
         await this.waitForNetworkIdle(this.page);
     }
 
+    /**
+     * Verifies that the order confirmation message is shown.
+     */
     async verifyOrderConfirmation() {
         await expect(this.page.getByText(/thanks for your order/i)).toBeVisible();
     }
